@@ -41,7 +41,7 @@ module JLDHistory
             data, tag = if force_save
                 (x.data, x.tag)
             else
-                (x.data[1:store_position-1], x.tag[1:store_position-1])
+                (x.data[1:store_position(x)-1], x.tag[1:store_position(x)-1])
             end
             new(data, tag)
         end

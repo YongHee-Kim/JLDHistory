@@ -11,7 +11,7 @@ function writehistory!(x, data, tag; force_save=false)
         x.store_position += 1
     end
 end
-function writehistory(x::TempHistoryData, force_save=false)
+function writehistory(x, force_save=false)
     h = HistoryData(x, force_save)
     jldopen(joinpath(filepath(x), "$(x.filename)_$(x.nth).jld"), "w") do file
         write(file, "historydata", h)

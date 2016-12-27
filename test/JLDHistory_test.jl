@@ -1,3 +1,4 @@
+include("C:\\Github\\julia\\JLDHistory\\src\\JLDHistory.jl")
 using JLD, JLDHistory
 
 PATH = dirname(@__FILE__)
