@@ -5,19 +5,20 @@ function writehistory!(x, data, tag; force_save=false)
     x.data[pos] = data
     x.tag[pos] = tag
     if isfull(x) || force_save
-        writehistory(x)
+        writehistory(x, force_save)
         reset!(x)
     else
         x.store_position += 1
     end
 end
-function writehistory(x)
+function writehistory(x::TempHistoryData, force_save=false)
+    h = HistoryData(x, force_save)
     jldopen(joinpath(filepath(x), "$(x.filename)_$(x.nth).jld"), "w") do file
-        write(file, "historydata", HistoryData(x))
+        write(file, "historydata", h)
     end
 end
 
-#= DOTO: 메타는 JLD말고 일반 text로 저장하는 옵션 추가
+#= TODO: 메타는 JLD말고 일반 text로 저장하는 옵션 추가
         Historydata를 child로 연결시켜서
         meta 저장할때 남은거 다 저장하도록...
 =#

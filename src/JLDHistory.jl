@@ -12,6 +12,7 @@ module JLDHistory
         path::String
         tags::Dict{String,Vector}
         # 5 is magic number or any fixed number will do? or it defends on T
+        HistoryMeta() = new(5, "", "", Dict{String,Vector}())
         function HistoryMeta(header, path; datalength=5)
             new(datalength, header, path, Dict{String,Vector}())
         end
@@ -36,8 +37,13 @@ module JLDHistory
         function HistoryData(x::TempHistoryData)
             new(x.data, x.tag)
         end
-        function HistoryData(x::TempHistoryData, store_position)
-            new(x.data[1:store_position], x.tag[1:store_position])
+        function HistoryData(x::TempHistoryData, force_save=false)
+            data, tag = if force_save
+                (x.data, x.tag)
+            else
+                (x.data[1:store_position-1], x.tag[1:store_position-1])
+            end
+            new(data, tag)
         end
     end
 
