@@ -1,3 +1,4 @@
+using FactCheck
 include("C:\\Github\\julia\\JLDHistory\\src\\JLDHistory.jl")
 using JLD, JLDHistory
 
@@ -19,14 +20,10 @@ writemeta(meta, "test1")
 meta_loaded = jldopen("$PATH\\test1.jld", "r") do file
     read(file, "metadata")
 end
-
-@test meta.tags == meta_loaded.tags
+@fact meta.tags --> meta_loaded.tags
 
 
 history_loaded = jldopen("$PATH\\first_1.jld", "r") do file
     read(file, "historydata")
 end
-
-history_loaded2 = jldopen("$PATH\\first_2.jld", "r") do file
-    read(file, "historydata")
-end
+@fact length(history_loaded.data) --> meta.datalength

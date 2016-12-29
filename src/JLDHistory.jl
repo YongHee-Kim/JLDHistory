@@ -54,7 +54,7 @@ module JLDHistory
     filepath(x::TempHistoryData) = filepath(x.meta)
 
     store_position(x::TempHistoryData) = x.store_position
-    isfull(x::TempHistoryData) = store_position(x) >= datalength(x)
+    isfull(x::TempHistoryData) = store_position(x) > datalength(x)
 
     function reset!(h::TempHistoryData)
         register!(h)

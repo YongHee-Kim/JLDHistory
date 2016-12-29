@@ -4,11 +4,10 @@ function writehistory!(x, data, tag; force_save=false)
     pos = store_position(x)
     x.data[pos] = data
     x.tag[pos] = tag
+    x.store_position += 1
     if isfull(x) || force_save
         writehistory(x, force_save)
         reset!(x)
-    else
-        x.store_position += 1
     end
 end
 function writehistory(x, force_save=false)
